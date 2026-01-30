@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+</head>
+<body>
+    <h1>Table</h1>
+    <div class="multipel">
+        <h2 id="range"></h2>
+        <h2 id="tab"></h2>
+    </div>
+    <script>
+        let num = Number(prompt("Enter Range To Find Table : "));
+        document.getElementById("range").innerText = `Range : ${num}`;
+
+        for (let i = 1; i <= num; i++) {
+            for (let j = 1; j <= 10; j++) {
+                let tab = i * j;
+                document.getElementById("tab").innerHTML += `${i} x ${j} = ${tab} <hr> <br>`;
+            }
+        }
+        
+    </script>
+</body>
+</html>

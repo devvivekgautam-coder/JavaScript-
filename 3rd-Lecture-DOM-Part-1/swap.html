@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap System</title>
+</head>
+<body>
+    <h1>Swap System</h1>
+    <h2 id="num1"></h2>
+    <h2 id="num2"></h2>
+    <h2 id="swap"></h2>
+
+    <script>
+        let num1 = Number(prompt("Enter The 1st Number : "));
+        let num2 = Number(prompt("Enter The 2nd Number : "));
+        document.getElementById("num1").innerText = `First : ${num1}`;
+        document.getElementById("num2").innerText = `Second : ${num2}`;
+
+        num1 = num1 + num2;
+        num2 = num1 - num2;
+        num1 = num1 - num2;
+
+        document.getElementById("swap").innerText = `Swap Num : ${num1} ${num2}`;
+    </script>
+</body>
+</html>

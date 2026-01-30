@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade</title>
+</head>
+<body>
+    <h1>
+        Grade Management System 
+    </h1>
+    <h2 id="name"></h2>
+    <h3 id="grade"></h3>
+    <h3 id="demo"></h3>
+    <script>
+        let name = prompt("Enter Your Name : ");
+        document.getElementById("name").innerText = `Name : ${name}`;
+
+        let grade = Number(prompt("Enter Your Marks : "));
+        document.getElementById("grade").innerText = `Grade : ${grade}`;
+
+        if (grade >= 90) {
+            document.getElementById("demo").innerText = "Your Grade Is : A+";
+        }
+        else if (grade >= 80) {
+            document.getElementById("demo").innerText = "Your Grade Is : A";
+        }
+        else if (grade >= 70) {
+            document.getElementById("demo").innerText = "Your Grade Is : B";
+        }
+        else if (grade >= 60) {
+            document.getElementById("demo").innerText = "Your Grade Is : C";
+        }
+        else if (grade >= 50) {
+            document.getElementById("demo").innerText = "Your Grade Is : D";
+        }
+        else if (grade >= 40) {
+            document.getElementById("demo").innerText = "Your Grade Is : E";
+        }
+        else {
+            document.getElementById("demo").innerText = "You Are Fail...";
+        }
+    </script>
+</body>
+</html>
