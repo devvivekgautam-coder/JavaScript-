@@ -15,13 +15,14 @@ let Student = {
             standMaths: 37,
             basicMaths: 38
         },
-
+        
         language: {
             english: 39,
             hindi: 40,
             gujarati: 41
-        }
+        },
     }
 }
+let result = Student.marks.language.gujarati > 40 ? "Pass" : "Fail";
 
-console.log(Student);
+console.log(result, Student);
