@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Array Of Object </title>
+
+    <style>
+        * {
+            padding: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        #box h3 {
+            color: red;
+            font-size: 30px;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        #box {
+            width: 400px;
+            height: 300px;
+            margin: 0 10px;
+            background-color: aqua;
+            border: 5px dashed black;
+        }
+        #array{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="array">
+        
+    </div>
+
+    <script>
+        let arr = [
+            {
+                id: 1,
+                name: "Vivek",
+                strem: "Commerce"
+            },
+            {
+                id: 2,
+                name: "Sakura",
+                strem: "Science"
+            },
+            {
+                id: 3,
+                name: "Patel Ji",
+                strem: "Art"
+            },
+            {
+                id: 4,
+                name: "Anuj",
+                strem: "Commerce"
+            },
+            {
+                id: 5,
+                name: "Hinata",
+                strem: "Bayakugaan"
+            }
+        ]
+
+        arr.forEach((arr) => {
+            document.getElementById("array").innerHTML += `
+            <div id="box">
+                <h3 id="rollNo">${arr.id}</h3>
+                <h3 id="name">${arr.name}</h3>
+                <h3 id="email">${arr.strem}</h3>
+            </div>
+            `
+        })
+    </script>
+</body>
+
+</html>
