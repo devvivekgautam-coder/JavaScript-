@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    background-color: #ffde03;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    height: 45px;
+}
+
+button {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    padding: 5px 15px;
+    background-color: #09f829;
+    border: 4px solid black;
+    box-shadow: 10px 12px 1px #53fb6a;
+    transition: all 0.5s linear;
+}
+
+button:hover {
+    box-shadow: none;
+    transform: translateX(5px);
+    cursor: pointer;
+}
+
+.quizBox {
+    text-align: center;
+}
+
+.innerBox {
+    box-shadow: 10px 12px 3px black;
+    width: 500px;
+    padding: 25px;
+    height: 270px;
+    display: inline-block;
+    background-color: white;
+    border: 4px solid black;
+}

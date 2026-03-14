@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="box">
+        <div class="innerBox">
+
+        </div>  
+    </div>
+    <button style="display: block; text-align: center;">Click Me</button>
+    <script>
+        let innerBox = document.querySelector(".innerBox");
+            document.addEventListener("click", () => {
+            innerBox.style.backgroundColor = "black";
+            innerBox.style.borderRadius = "50%";
+            innerBox.style.border = "5px solid green";
+        })
+    </script>
+</body>
+</html>
