@@ -145,7 +145,7 @@ let audio = document.getElementById("audio");
 
 function loadSongs() {
     let mainContainer = document.getElementById("item");
-    
+
     mainContainer.innerHTML = `
         <aside class="col-lg-2 sidebar text-center">
             <ul class="listMenu">
@@ -186,3 +186,31 @@ function playSong(i) {
 }
 
 window.onload = loadSongs;
+
+let songAudio = document.getElementById("audio");
+let playBtn = document.getElementById("play");
+let progress = document.getElementById("progress");
+let volume = document.getElementById("volume");
+
+playBtn.onclick = () => {
+    if (songAudio.paused) {
+        songAudio.play();
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    }
+    else {
+        songAudio.pause();
+        playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+    }
+}
+
+songAudio.ontimeupdate = () => {
+    progress.value = (songAudio.currentTime / songAudio.duration) * 100;
+}
+
+progress.oninput = () => {
+    songAudio.currentTime = (progress.value * songAudio.duration) / 100;
+}
+
+volume.oninput = () => {
+    songAudio.volume = volume.value;
+}

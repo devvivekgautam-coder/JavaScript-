@@ -27,10 +27,24 @@
 
 <body>
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="./index.html">
-                <img src="./assets/images/music-galaxy-logo.png" width="70">
+        <div class="container-fluid justify-content-start">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/images/music-galaxy-logo.png" alt="music-galaxy-logo" width="70px">
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center align-items-center">
+                <li class="nav-item">
+                    <i class="fa-solid fa-house me-2"></i>
+                </li>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </ul>
         </div>
     </nav>
 
@@ -38,18 +52,39 @@
         <div class="row" id="item">
             <aside class="col-lg-2 sidebar text-center">
                 <ul class="listMenu">
-                                        
+
                 </ul>
             </aside>
         </div>
     </section>
 
     <div class="fixed-bottom bg-dark p-3 text-center">
-        <audio id="audio" controls class="w-50">
+        <audio id="audio">
             <source src="" type="audio/mpeg">
         </audio>
+
+        <div class="player">
+            <div class="controls">
+
+                <button id="prev"><i class="fa-solid fa-backward"></i></button>
+
+                <button id="play"><i class="fa-solid fa-play"></i></button>
+
+                <button id="next"><i class="fa-solid fa-forward"></i></button>
+
+            </div>
+
+            <input type="range" id="progress" value="0">
+
+            <div class="volumeBox">
+                <i class="fa-solid fa-volume-high"></i>
+                <input type="range" id="volume" min="0" max="1" step="0.01">
+            </div>
+
+        </div>
     </div>
 
+    <script src="./assets/js/bootstrap.bundel.min.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>
 
