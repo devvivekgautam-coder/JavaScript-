@@ -27,7 +27,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid justify-content-start">
+        <div class="container-fluid justify-content-between">
             <a class="navbar-brand" href="#">
                 <img src="./assets/images/music-galaxy-logo.png" alt="music-galaxy-logo" width="70px">
             </a>
@@ -36,14 +36,28 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center align-items-center">
                 <li class="nav-item">
-                    <i class="fa-solid fa-house me-2"></i>
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <input class="form-control me-2" type="search" placeholder="Search Your Galaxy"
+                        aria-label="Search" />
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+            </ul>
+
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Install App</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign Up</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -74,6 +88,14 @@
 
             </div>
 
+            <div class="nowPlaying">
+                <img id="songCover" src="" alt="cover">
+                <div class="songDetails">
+                    <h6 id="songTitle"></h6>
+                    <p id="songArtist"></p>
+                </div>
+            </div>
+
             <input type="range" id="progress" value="0">
 
             <div class="volumeBox">
@@ -82,6 +104,11 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="time">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
     </div>
 
     <script src="./assets/js/bootstrap.bundel.min.js"></script>

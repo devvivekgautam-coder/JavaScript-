@@ -148,3 +148,94 @@ aside {
 #volume {
     width: 120px;
 }
+
+.navbar-nav input {
+    width: 900px;
+}
+
+.activeSong {
+    border: 2px solid #00D4FF;
+    box-shadow: 0 0 15px #00D4FF;
+    transform: scale(1.05);
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.nowPlaying {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.nowPlaying img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.songDetails h6 {
+    margin: 0;
+    color: white;
+    font-size: 14px;
+}
+
+.songDetails p {
+    margin: 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+
+.nowPlaying img {
+    transition: 0.3s;
+}
+
+.nowPlaying img:hover {
+    transform: scale(1.1);
+}
+
+#nowPlaying {
+    display: none;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+    aside {
+        display: none;
+    }
+
+    .player {
+        width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .controls button {
+        width: 40px;
+        height: 40px;
+    }
+
+    #play {
+        width: 55px;
+        height: 55px;
+    }
+
+    .songInfo h5 {
+        font-size: 0.9rem;
+    }
+
+    .songInfo p {
+        font-size: 0.7rem;
+    }
+}

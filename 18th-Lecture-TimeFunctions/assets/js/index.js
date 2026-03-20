@@ -159,8 +159,7 @@ function loadSongs() {
         </aside>
         
         <div class="col-lg-10">
-            <div class="row pt-3" id="songsGrid">
-                </div>
+            <div class="row" id="songsGrid"></div>
         </div>
     `;
 
@@ -180,9 +179,28 @@ function loadSongs() {
     });
 }
 
+let currentIndex = 0;
+
+let nowPlaying = document.getElementById("nowPlaying");
+let songCover = document.getElementById("songCover");
+let songTitle = document.getElementById("songTitle");
+let songArtist = document.getElementById("songArtist");
+
 function playSong(i) {
+    currentIndex = i;
+
     audio.src = songs[i].src;
     audio.play();
+
+    nowPlaying.style.display = "flex";
+
+    songCover.src = songs[i].cover;
+    songTitle.innerText = songs[i].title;
+    songArtist.innerText = songs[i].artist;
+
+    playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+
+    highlightSong(i);
 }
 
 window.onload = loadSongs;
@@ -204,8 +222,10 @@ playBtn.onclick = () => {
 }
 
 songAudio.ontimeupdate = () => {
-    progress.value = (songAudio.currentTime / songAudio.duration) * 100;
-}
+    if (!isNaN(songAudio.duration)) {
+        progress.value = (songAudio.currentTime / songAudio.duration) * 100;
+    }
+};
 
 progress.oninput = () => {
     songAudio.currentTime = (progress.value * songAudio.duration) / 100;
@@ -214,3 +234,48 @@ progress.oninput = () => {
 volume.oninput = () => {
     songAudio.volume = volume.value;
 }
+
+function highlightSong(index) {
+    let allSongs = document.querySelectorAll(".songInfo");
+
+    allSongs.forEach((song, i) => {
+        song.classList.remove("activeSong");
+        if (i === index) {
+            song.classList.add("activeSong");
+        }
+    });
+}
+
+let currentTimeEl = document.getElementById("currentTime");
+let durationEl = document.getElementById("duration");
+
+songAudio.ontimeupdate = () => {
+    if (!isNaN(songAudio.duration)) {
+        progress.value = (songAudio.currentTime / songAudio.duration) * 100;
+
+        currentTimeEl.innerText = formatTime(songAudio.currentTime);
+        durationEl.innerText = formatTime(songAudio.duration);
+    }
+};
+
+function formatTime(time) {
+    let min = Math.floor(time / 60);
+    let sec = Math.floor(time % 60);
+    if (sec < 10) sec = "0" + sec;
+    return `${min}:${sec}`;
+}
+
+document.getElementById("next").onclick = () => {
+    currentIndex = (currentIndex + 1) % songs.length;
+    playSong(currentIndex);
+};
+
+document.getElementById("next").onclick = () => {
+    currentIndex = (currentIndex + 1) % songs.length;
+    playSong(currentIndex);
+};
+
+songAudio.onended = () => {
+    currentIndex = (currentIndex + 1) % songs.length;
+    playSong(currentIndex);
+};
