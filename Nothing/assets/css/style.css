@@ -1,0 +1,19 @@
+.formSection {
+    background-color: red;
+    padding: 20px;
+}
+
+input {
+    padding: 7px 10px;
+    width: 550px;
+    border-radius: 5px;
+    border:1px dashed black;
+}
+
+button {
+    border: 0;
+    font-size: 20px;
+    padding: 10px 25px;
+    color: white;
+    background-color: rgb(6, 120, 6)
+}

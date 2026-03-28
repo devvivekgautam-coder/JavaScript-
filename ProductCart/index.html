@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Hub</title>
+  
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+
+</head>
+
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="grid-overlay"></div>
+  <canvas id="particles"></canvas>
+
+  <div id="app">
+    <nav>
+      <div class="nav-logo">ProductHub<span></span></div>
+      <div class="nav-actions">
+        <button class="nav-btn" id="btnAdd" onclick="showPage('add')">+ Add</button>
+        <button class="nav-btn" id="btnView" onclick="showPage('view')">View</button>
+        <button class="nav-btn cart-btn" onclick="showPage('cart')">
+          🛒 Cart <span id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- ADD PAGE -->
+      <div id="addPage" class="page active">
+        <div class="page-header">
+          <h1 class="page-title">Add <span class="highlight">Product</span></h1>
+        </div>
+
+        <div class="form-card">
+          <div class="form-group">
+            <label class="form-label">Product Name</label>
+            <input class="form-input" type="text" id="name" placeholder="e.g. Wireless Headphones">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Price (₹)</label>
+            <input class="form-input" type="number" id="price" placeholder="e.g. 1999">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Image URL</label>
+            <input class="form-input" type="text" id="image" placeholder="https://..." oninput="preview()">
+          </div>
+
+          <div class="preview-box" id="previewBox">
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <span class="icon">🖼️</span>
+              Image preview will appear here
+            </div>
+            <img id="preview" alt="Preview">
+          </div>
+
+          <button class="btn-primary" onclick="addProduct()">Add Product →</button>
+        </div>
+      </div>
+
+      <!-- VIEW PAGE -->
+      <div id="viewPage" class="page">
+        <div class="page-header">
+          <h1 class="page-title">Explore <span class="highlight">Products</span></h1>
+        </div>
+
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" type="text" id="search" placeholder="Search products..."
+            oninput="renderProducts()">
+        </div>
+
+        <div class="stats-bar" id="statsBar"></div>
+
+        <div class="products-grid" id="products"></div>
+      </div>
+
+      <!-- CART PAGE -->
+      <div id="cartPage" class="page">
+        <div class="page-header">
+          <h1 class="page-title">Your <span class="highlight">Cart</span></h1>
+        </div>
+
+        <div id="cartItems" class="cart-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal" onclick="handleModalClick(event)">
+    <div class="modal-box" id="modalContent"></div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✅</span>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
