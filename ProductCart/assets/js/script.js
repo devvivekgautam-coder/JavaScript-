@@ -1,77 +1,17 @@
-(function () {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [];
-
-    function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
-
-    function createParticles() {
-        particles = [];
-        const count = Math.floor((W * H) / 14000);
-        for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * W,
-                y: Math.random() * H,
-                r: Math.random() * 1.5 + 0.3,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                alpha: Math.random() * 0.5 + 0.1,
-                color: ['108,99,255', '255,107,157', '0,212,170'][Math.floor(Math.random() * 3)]
-            });
-        }
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, W, H);
-
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(108,99,255,${0.06 * (1 - dist / 120)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
-
-        // Draw particles
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0) p.x = W;
-            if (p.x > W) p.x = 0;
-            if (p.y < 0) p.y = H;
-            if (p.y > H) p.y = 0;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
-            ctx.fill();
-        });
-
-        requestAnimationFrame(draw);
-    }
-
-    resize();
-    createParticles();
-    draw();
-    window.addEventListener('resize', () => { resize(); createParticles(); });
-})();
-
-
 let products = JSON.parse(localStorage.getItem("products") || "[]");
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+let currentSort = "default";
 
+cart = cart.map(item => ({ ...item, qty: item.qty || 1 }));
+saveCart();
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function totalCartItems() {
+    return cart.reduce((sum, item) => sum + item.qty, 0);
+}
 
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -86,7 +26,6 @@ function showPage(page) {
     if (page === 'view') renderProducts();
     if (page === 'cart') renderCart();
 }
-
 
 function preview() {
     const url = document.getElementById("image").value.trim();
@@ -106,14 +45,13 @@ function preview() {
     }
 }
 
-
 function addProduct() {
     const name = document.getElementById("name").value.trim();
     const price = document.getElementById("price").value.trim();
     const image = document.getElementById("image").value.trim();
 
     if (!name || !price) {
-        showToast("⚠️", "Please fill in name and price!");
+        showToast("⚠️", "Please fill all fields!");
         return;
     }
 
@@ -123,67 +61,98 @@ function addProduct() {
     document.getElementById("name").value = "";
     document.getElementById("price").value = "";
     document.getElementById("image").value = "";
-    document.getElementById("preview").style.display = "none";
-    document.getElementById("previewPlaceholder").style.display = "";
-    document.getElementById("previewBox").classList.remove('has-image');
 
-    showToast("✅", `"${name}" added successfully!`);
+    preview();
+    showToast("✅", `${name} added!`);
 }
 
+function getSortedProducts(list) {
+    const sorted = [...list];
+    if (currentSort === "az") {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (currentSort === "za") {
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (currentSort === "lowhigh") {
+        sorted.sort((a, b) => a.price - b.price);
+    } else if (currentSort === "highlow") {
+        sorted.sort((a, b) => b.price - a.price);
+    }
+    return sorted;
+}
+
+function setSort(val) {
+    currentSort = val;
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.sort === val);
+    });
+    renderProducts();
+}
 
 function renderProducts() {
     const container = document.getElementById("products");
     const search = document.getElementById("search").value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(search));
 
-    // Stats
+    const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(search)
+    );
+
+    const sorted = getSortedProducts(filtered);
+
     const statsBar = document.getElementById("statsBar");
-    const total = products.reduce((s, p) => s + parseFloat(p.price), 0);
-    statsBar.innerHTML = `
-    <div class="stat-pill">🛍️ <strong>${products.length}</strong> Products</div>
-    <div class="stat-pill">🔍 <strong>${filtered.length}</strong> Shown</div>
-    <div class="stat-pill">💰 Avg ₹<strong>${products.length ? Math.round(total / products.length).toLocaleString() : 0}</strong></div>
-  `;
+    statsBar.style.display = "flex";
 
-    if (!filtered.length) {
-        container.innerHTML = `
-      <div class="empty-state">
-        <span class="icon">📦</span>
-        <p>${search ? 'No products match your search.' : 'No products yet. Add one!'}</p>
-      </div>`;
+    const total = products.reduce((s, p) => s + p.price, 0);
+    statsBar.innerHTML = `
+        <div class="stat-pill">🛍️ <strong>${products.length}</strong> Products</div>
+        <div class="stat-pill">🔍 <strong>${filtered.length}</strong> Shown</div>
+        <div class="stat-pill">💰 Avg ₹<strong>${products.length ? Math.round(total / products.length) : 0}</strong></div>
+    `;
+
+    if (!sorted.length) {
+        container.innerHTML = `<div class="empty-state"><span class="icon">📭</span><p>No products found</p></div>`;
         return;
     }
 
-    container.innerHTML = filtered.map((p, i) => `
-    <div class="product-card" style="animation-delay:${i * 0.06}s">
-      <div class="product-img-wrap">
-        ${p.image
-            ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">`
-            : `<span class="no-img-placeholder">🛒</span>`}
-      </div>
-      <div class="product-info">
-        <div class="product-name" title="${p.name}">${p.name}</div>
-        <div class="product-price">₹${parseFloat(p.price).toLocaleString()}</div>
-        <div class="product-actions">
-          <button class="btn-view" onclick="viewProduct(${p.id})">👁 View</button>
-          <button class="btn-cart" onclick="addToCart(${p.id})">+ Cart</button>
+    container.innerHTML = sorted.map(p => `
+        <div class="product-card">
+            <div class="product-img-wrap">
+                ${p.image ? `<img src="${p.image}" onerror="this.style.display='none'">` : '<span class="no-img-placeholder">🛒</span>'}
+            </div>
+            <div class="product-info">
+                <div class="product-name">${p.name}</div>
+                <div class="product-price">₹${p.price}</div>
+                <div class="product-actions">
+                    <button class="btn-view" onclick="viewProduct(${p.id})">View</button>
+                    <button class="btn-cart" onclick="addToCart(${p.id})">+ Cart</button>
+                </div>
+                <button class="btn-buy" onclick="buyNow(${p.id})">Buy Now</button>
+            </div>
         </div>
-      </div>
-    </div>
-  `).join("");
+    `).join("");
 }
-
 
 function viewProduct(id) {
     const p = products.find(x => x.id === id);
+    if (!p) return;
+
     const modal = document.getElementById("modal");
-    document.getElementById("modalContent").innerHTML = `
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    ${p.image ? `<img class="modal-img" src="${p.image}" alt="${p.name}">` : ''}
-    <div class="modal-name">${p.name}</div>
-    <div class="modal-price">₹${parseFloat(p.price).toLocaleString()}</div>
-    <button class="btn-primary" onclick="addToCart(${p.id}); closeModal()">🛒 Add to Cart</button>
-  `;
+    const content = document.getElementById("modalContent");
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        ${p.image ? `<img class="modal-img" src="${p.image}" onerror="this.style.display='none'" alt="${p.name}">` : ''}
+        <div class="modal-name">${p.name}</div>
+        <div class="modal-price">₹${p.price}</div>
+        <div class="modal-meta">
+            <div class="modal-meta-item"><span class="modal-meta-label">Product ID</span><span class="modal-meta-value">#${p.id}</span></div>
+            <div class="modal-meta-item"><span class="modal-meta-label">Status</span><span class="modal-meta-value modal-badge">In Stock</span></div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-primary" onclick="addToCart(${p.id}); closeModal()">🛒 Add to Cart</button>
+            <button class="btn-buy-modal" onclick="buyNow(${p.id}); closeModal()">⚡ Buy Now</button>
+        </div>
+    `;
+
     modal.classList.add('open');
 }
 
@@ -192,62 +161,110 @@ function closeModal() {
 }
 
 function handleModalClick(e) {
-    if (e.target === document.getElementById('modal')) closeModal();
+    if (e.target === document.getElementById("modal")) closeModal();
 }
 
+function buyNow(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+
+    const existing = cart.find(x => x.id === id);
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ ...p, qty: 1 });
+    }
+
+    saveCart();
+    updateCartCount();
+    showToast("⚡", `Buying ${p.name}!`);
+    showPage('cart');
+}
 
 function addToCart(id) {
     const p = products.find(x => x.id === id);
-    cart.push(p);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    const existing = cart.find(x => x.id === id);
+
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ ...p, qty: 1 });
+    }
+
+    saveCart();
     updateCartCount();
-    showToast("🛒", `"${p.name}" added to cart!`);
+    showToast("🛒", `${p.name} added`);
+}
+
+function increaseQty(id) {
+    const item = cart.find(x => x.id === id);
+    item.qty++;
+    saveCart();
+    renderCart();
+    updateCartCount();
+}
+
+function decreaseQty(id) {
+    const item = cart.find(x => x.id === id);
+    if (item.qty > 1) item.qty--;
+    saveCart();
+    renderCart();
+    updateCartCount();
+}
+
+function deleteItem(id) {
+    cart = cart.filter(item => item.id !== id);
+    saveCart();
+    renderCart();
+    updateCartCount();
+    showToast("❌", "Item removed");
 }
 
 function renderCart() {
     const container = document.getElementById("cartItems");
 
     if (!cart.length) {
-        container.innerHTML = `<div class="empty-state"><span class="icon">🛒</span><p>Your cart is empty.</p></div>`;
+        container.innerHTML = `<div class="empty-state"><span class="icon">🛒</span><p>Cart is empty</p></div>`;
         return;
     }
 
-    const total = cart.reduce((s, p) => s + parseFloat(p.price), 0);
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-    container.innerHTML = cart.map((p, i) => `
-    <div class="cart-item" style="animation-delay:${i * 0.07}s">
-      ${p.image ? `<img class="cart-item-img" src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
-      <div class="cart-item-info">
-        <div class="cart-item-name">${p.name}</div>
-        <div class="cart-item-price">₹${parseFloat(p.price).toLocaleString()}</div>
-      </div>
-    </div>
-  `).join("") + `
-    <div class="cart-total">
-      <div>
-        <div class="cart-total-label">Total Amount</div>
-        <div style="color:var(--muted);font-size:0.8rem">${cart.length} item${cart.length !== 1 ? 's' : ''}</div>
-      </div>
-      <div class="cart-total-amount">₹${total.toLocaleString()}</div>
-    </div>
-  `;
+    container.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <img class="cart-item-img" src="${item.image}" onerror="this.style.opacity='0'">
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">₹${item.price} × ${item.qty}</div>
+            </div>
+
+            <div class="btns">
+                <button onclick="decreaseQty(${item.id})">-</button>
+                <span>${item.qty}</span>
+                <button onclick="increaseQty(${item.id})">+</button>
+            </div>
+
+            <div class="cart-item-subtotal">₹${item.price * item.qty}</div>
+            <button class="cart-delete-btn" onclick="deleteItem(${item.id})">🗑</button>
+        </div>
+    `).join("") + `
+        <div class="cart-total">
+            <span class="cart-total-label">Total</span>
+            <span class="cart-total-amount">₹${total}</span>
+        </div>
+    `;
 }
 
 function updateCartCount() {
-    document.getElementById("cartCount").textContent = cart.length;
+    document.getElementById("cartCount").textContent = totalCartItems();
 }
 
-
-let toastTimer;
 function showToast(icon, msg) {
     const toast = document.getElementById("toast");
     document.querySelector(".toast-icon").textContent = icon;
     document.getElementById("toastMsg").textContent = msg;
     toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-
 updateCartCount();
-document.getElementById('btnAdd').classList.add('active');

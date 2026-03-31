@@ -30,15 +30,11 @@ body {
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
-    /* cursor: /; */
 }
 
-/* ═══════════════════════════════════ BACKGROUND LAYERS ═══ */
-
-/* Orbs become harsh square color blobs — brutalism doesn't blur */
 .orb {
     position: fixed;
-    border-radius: 0;           /* squares, not circles */
+    border-radius: 0;
     filter: blur(0px);
     opacity: 0.04;
     pointer-events: none;
@@ -77,24 +73,47 @@ body {
 }
 
 @keyframes driftA {
-    0%   { transform: translate(0, 0) skewX(0deg); }
-    50%  { transform: translate(120px, 80px) skewX(5deg); }
-    100% { transform: translate(60px, 200px) skewX(-3deg); }
+    0% {
+        transform: translate(0, 0) skewX(0deg);
+    }
+
+    50% {
+        transform: translate(120px, 80px) skewX(5deg);
+    }
+
+    100% {
+        transform: translate(60px, 200px) skewX(-3deg);
+    }
 }
 
 @keyframes driftB {
-    0%   { transform: translate(0, 0) skewY(0deg); }
-    50%  { transform: translate(-100px, -60px) skewY(-4deg); }
-    100% { transform: translate(-60px, -180px) skewY(3deg); }
+    0% {
+        transform: translate(0, 0) skewY(0deg);
+    }
+
+    50% {
+        transform: translate(-100px, -60px) skewY(-4deg);
+    }
+
+    100% {
+        transform: translate(-60px, -180px) skewY(3deg);
+    }
 }
 
 @keyframes driftC {
-    0%   { transform: translate(-50%, -50%) rotate(0deg); }
-    50%  { transform: translate(-50%, -50%) rotate(15deg) scale(1.2); }
-    100% { transform: translate(-50%, -50%) rotate(-10deg) scale(0.85); }
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) rotate(15deg) scale(1.2);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(-10deg) scale(0.85);
+    }
 }
 
-/* Particles canvas stays — particles look great with brutal style */
 canvas#particles {
     position: fixed;
     inset: 0;
@@ -103,7 +122,6 @@ canvas#particles {
     opacity: 0.6;
 }
 
-/* Grid overlay — more visible, harsher */
 .grid-overlay {
     position: fixed;
     inset: 0;
@@ -115,8 +133,6 @@ canvas#particles {
     pointer-events: none;
 }
 
-/* ═══════════════════════════════════ APP SHELL ═══ */
-
 #app {
     position: relative;
     z-index: 1;
@@ -124,8 +140,6 @@ canvas#particles {
     display: flex;
     flex-direction: column;
 }
-
-/* ═══════════════════════════════════ NAV ═══ */
 
 nav {
     display: flex;
@@ -138,7 +152,6 @@ nav {
     top: 0;
     z-index: 100;
     height: 64px;
-    /* NO backdrop-filter — brutalism is raw */
 }
 
 .nav-logo {
@@ -148,14 +161,9 @@ nav {
     color: var(--accent);
     letter-spacing: 4px;
     text-transform: uppercase;
-    /* NO gradient text — flat color only */
-    background: none;
-    -webkit-background-clip: unset;
     -webkit-text-fill-color: var(--accent);
-    background-clip: unset;
 }
 
-/* The pulse dot becomes a blinking block cursor */
 .nav-logo span {
     display: inline-block;
     width: 10px;
@@ -163,18 +171,19 @@ nav {
     background: var(--accent);
     margin-left: 4px;
     vertical-align: middle;
-    border-radius: 0;
     animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-}
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .nav-actions {
@@ -197,21 +206,17 @@ nav {
     transition: background 0.1s, color 0.1s;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    margin: 0 5px;
 }
 
 .nav-btn:hover {
     background: #1a1a1a;
-    border-color: #333;
-    transform: none;
-    box-shadow: none;
     color: var(--text);
 }
 
 .nav-btn.active {
     background: var(--accent);
-    border-color: var(--accent);
-    box-shadow: none;
-    margin: 0 5px;
+    color: #000;
 }
 
 .cart-btn {
@@ -219,15 +224,10 @@ nav {
     border-left: 2px solid var(--accent2);
     color: #ffffff;
     font-weight: 700;
-    position: relative;
 }
 
 .cart-btn:hover {
     background: #cc0033;
-    border-color: #cc0033;
-    opacity: 1;
-    transform: none;
-    box-shadow: none;
     color: #fff;
 }
 
@@ -246,16 +246,12 @@ nav {
     border: 1px solid var(--accent);
 }
 
-/* ═══════════════════════════════════ CONTAINER ═══ */
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 32px;
     flex: 1;
 }
-
-/* ═══════════════════════════════════ PAGE HEADERS ═══ */
 
 .page-header {
     margin-bottom: 36px;
@@ -275,37 +271,73 @@ nav {
 
 .page-title .highlight {
     color: var(--accent);
-    background: none;
-    -webkit-background-clip: unset;
     -webkit-text-fill-color: var(--accent);
-    background-clip: unset;
 }
 
 .page-subtitle {
     color: var(--muted);
     margin-top: 6px;
     font-size: 0.75rem;
-    font-weight: 400;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
-/* ═══════════════════════════════════ FORM ═══ */
+/* ─── SORT BAR ─────────────────────────────────── */
+.sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
 
+.sort-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    margin-right: 4px;
+}
+
+.sort-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 0;
+    color: var(--muted);
+    cursor: crosshair;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.1s;
+}
+
+.sort-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.sort-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+}
+
+/* ─── FORM ──────────────────────────────────────── */
 .form-card {
     background: var(--surface);
     border: var(--border-thick);
-    border-radius: 0;
     padding: 36px;
-    backdrop-filter: none;
     max-width: 580px;
     position: relative;
     overflow: hidden;
-    /* Offset shadow — brutalist signature */
     box-shadow: 6px 6px 0 var(--accent);
 }
 
-/* Replace gradient top-bar with a solid thick accent stripe */
 .form-card::before {
     content: '';
     position: absolute;
@@ -328,7 +360,6 @@ nav {
     letter-spacing: 0.15em;
     color: var(--accent);
     margin-bottom: 6px;
-    font-family: 'Space Mono', monospace;
 }
 
 .form-input {
@@ -336,7 +367,6 @@ nav {
     padding: 12px 14px;
     background: #000;
     border: 2px solid #333;
-    border-radius: 0;
     color: var(--text);
     font-family: 'Space Mono', monospace;
     font-size: 0.9rem;
@@ -358,15 +388,12 @@ nav {
 .preview-box {
     width: 100%;
     height: 180px;
-    border-radius: 0;
     border: 2px dashed #333;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    transition: border-color 0.15s;
     margin-bottom: 24px;
-    position: relative;
     background: #000;
 }
 
@@ -387,7 +414,6 @@ nav {
     text-align: center;
     color: #333;
     font-size: 0.75rem;
-    font-family: 'Space Mono', monospace;
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -396,7 +422,7 @@ nav {
     font-size: 2rem;
     display: block;
     margin-bottom: 6px;
-    filter: grayscale(1) opacity(0.4);
+    opacity: 0.4;
 }
 
 .btn-primary {
@@ -404,27 +430,14 @@ nav {
     padding: 16px;
     background: var(--accent);
     border: 2px solid var(--accent);
-    border-radius: 0;
     color: #000000;
     font-family: 'Bebas Neue', 'Impact', sans-serif;
     font-size: 1.2rem;
-    font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: crosshair;
-    transition: background 0.1s, transform 0.1s, box-shadow 0.1s;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.1s;
     box-shadow: 4px 4px 0 #fff;
-}
-
-.btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.15);
-    transform: translateX(-100%);
-    transition: transform 0.2s;
 }
 
 .btn-primary:hover {
@@ -435,17 +448,10 @@ nav {
     box-shadow: 6px 6px 0 var(--accent);
 }
 
-.btn-primary:hover::after { transform: translateX(0); }
-
-.btn-primary:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--accent);
-}
-
-
+/* ─── SEARCH ────────────────────────────────────── */
 .search-wrapper {
     position: relative;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 }
 
 .search-icon {
@@ -456,15 +462,13 @@ nav {
     color: var(--muted);
     font-size: 0.9rem;
     pointer-events: none;
-    filter: grayscale(1);
 }
 
 .search-input {
     width: 100%;
     padding: 14px 14px 14px 46px;
-    background: white;
+    background: #1a1a1a;
     border: 2px solid #333;
-    border-radius: 0;
     color: var(--text);
     font-family: 'Space Mono', monospace;
     font-size: 0.9rem;
@@ -473,7 +477,7 @@ nav {
 }
 
 .search-input::placeholder {
-    color: #333;
+    color: #444;
     font-style: italic;
 }
 
@@ -482,9 +486,9 @@ nav {
     box-shadow: 4px 4px 0 var(--accent);
 }
 
-
+/* ─── STATS ─────────────────────────────────────── */
 .stats-bar {
-    display: none;
+    display: none !important;
     gap: 0;
     margin-bottom: 28px;
     flex-wrap: wrap;
@@ -494,9 +498,7 @@ nav {
 .stat-pill {
     padding: 8px 18px;
     background: #000;
-    border: none;
     border-right: 2px solid #222;
-    border-radius: 0;
     font-size: 0.7rem;
     color: var(--muted);
     display: flex;
@@ -507,14 +509,15 @@ nav {
     letter-spacing: 0.08em;
 }
 
-.stat-pill:last-child { border-right: none; }
+.stat-pill:last-child {
+    border-right: none;
+}
 
 .stat-pill strong {
     color: var(--accent);
 }
 
-/* ═══════════════════════════════════ PRODUCTS GRID ═══ */
-
+/* ─── PRODUCTS GRID ─────────────────────────────── */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -522,43 +525,47 @@ nav {
     border: 2px solid #222;
 }
 
-/* Each card sits in a grid — borders create the "newspaper layout" feel */
 .product-card {
     background: var(--surface);
-    border: none;
     border-right: 2px solid #222;
     border-bottom: 2px solid #222;
-    border-radius: 0;
     overflow: hidden;
     transition: background 0.1s;
-    backdrop-filter: none;
     animation: fadeUp 0.3s ease forwards;
     opacity: 0;
     position: relative;
 }
 
 @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .product-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 0; height: 3px;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
     background: var(--accent);
     transition: width 0.25s ease;
     z-index: 2;
 }
 
-.product-card:hover::before { width: 100%; }
+.product-card:hover::before {
+    width: 100%;
+}
 
 .product-card:hover {
     background: #161616;
-    transform: none;
-    border-color: #444;
-    box-shadow: none;
 }
 
 .product-img-wrap {
@@ -568,13 +575,7 @@ nav {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    position: relative;
     border-bottom: 2px solid #222;
-}
-
-/* Remove soft gradient fade */
-.product-img-wrap::after {
-    display: none;
 }
 
 .product-img-wrap img {
@@ -594,7 +595,6 @@ nav {
 .no-img-placeholder {
     font-size: 3rem;
     opacity: 0.15;
-    filter: grayscale(1);
 }
 
 .product-info {
@@ -604,7 +604,6 @@ nav {
 
 .product-name {
     font-family: 'Bebas Neue', 'Impact', sans-serif;
-    font-weight: 400;
     font-size: 1.2rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -619,18 +618,15 @@ nav {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--accent);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     font-family: 'Space Mono', monospace;
-    /* Remove gradient */
-    background: none;
-    -webkit-background-clip: unset;
     -webkit-text-fill-color: var(--accent);
-    background-clip: unset;
 }
 
 .product-actions {
     display: flex;
     gap: 0;
+    margin-bottom: 8px;
 }
 
 .btn-view {
@@ -638,7 +634,6 @@ nav {
     padding: 10px 8px;
     background: transparent;
     border: 2px solid #333;
-    border-radius: 0;
     color: var(--muted);
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem;
@@ -660,7 +655,6 @@ nav {
     padding: 10px 8px;
     background: var(--accent);
     border: 2px solid var(--accent);
-    border-radius: 0;
     color: #000;
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem;
@@ -669,18 +663,39 @@ nav {
     letter-spacing: 0.1em;
     transition: all 0.1s;
     margin-left: 5px;
+    cursor: crosshair;
 }
 
 .btn-cart:hover {
     background: #000;
     color: var(--accent);
     border-color: var(--accent);
-    opacity: 1;
-    transform: none;
 }
 
-/* ═══════════════════════════════════ EMPTY STATE ═══ */
+/* ─── BUY NOW BUTTON ────────────────────────────── */
+.btn-buy {
+    width: 100%;
+    padding: 10px 8px;
+    background: var(--accent2);
+    border: 2px solid var(--accent2);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: crosshair;
+    transition: all 0.1s;
+}
 
+.btn-buy:hover {
+    background: #cc0033;
+    border-color: #cc0033;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #000;
+}
+
+/* ─── EMPTY STATE ───────────────────────────────── */
 .empty-state {
     text-align: center;
     padding: 80px 20px;
@@ -689,7 +704,6 @@ nav {
     font-family: 'Space Mono', monospace;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    font-size: 0.8rem;
 }
 
 .empty-state .icon {
@@ -697,13 +711,13 @@ nav {
     display: block;
     margin-bottom: 16px;
     opacity: 0.2;
-    filter: grayscale(1);
 }
 
-.empty-state p { font-size: 0.8rem; }
+.empty-state p {
+    font-size: 0.8rem;
+}
 
-/* ═══════════════════════════════════ CART ═══ */
-
+/* ─── CART ──────────────────────────────────────── */
 .cart-list {
     display: flex;
     flex-direction: column;
@@ -713,60 +727,36 @@ nav {
 
 .cart-item {
     background: var(--surface);
-    border: none;
     border-bottom: 2px solid #222;
-    border-radius: 0;
     padding: 18px 24px;
     display: flex;
     align-items: center;
     gap: 18px;
-    backdrop-filter: none;
     animation: fadeUp 0.3s ease forwards;
     opacity: 0;
     transition: background 0.1s;
-    position: relative;
-}
-
-.cart-item::before {
-    content: '▶';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent);
-    font-size: 0.6rem;
-    opacity: 0;
-    transition: opacity 0.15s, left 0.15s;
-}
-
-.cart-item:hover::before {
-    opacity: 1;
-    left: 8px;
 }
 
 .cart-item:hover {
     background: #161616;
-    transform: none;
-    border-color: #333;
 }
 
 .cart-item-img {
     width: 64px;
     height: 64px;
-    border-radius: 0;
     object-fit: contain;
     background: #000;
     padding: 6px;
     flex-shrink: 0;
     border: 2px solid #222;
-    filter: grayscale(20%);
 }
 
-.cart-item-info { flex: 1; }
+.cart-item-info {
+    flex: 1;
+}
 
 .cart-item-name {
     font-family: 'Bebas Neue', 'Impact', sans-serif;
-    font-weight: 400;
     font-size: 1.1rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -780,13 +770,77 @@ nav {
     font-family: 'Space Mono', monospace;
 }
 
-.cart-total {
+.cart-item-subtotal {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    min-width: 70px;
+    text-align: right;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 2px solid #333;
+}
+
+.btns button {
+    font-size: 1rem;
+    width: 32px;
+    height: 32px;
     background: #000;
     border: none;
-    border-radius: 0;
+    color: var(--text);
+    cursor: crosshair;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    transition: background 0.1s;
+}
+
+.btns button:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+.btns span {
+    width: 36px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    line-height: 32px;
+}
+
+.cart-delete-btn {
+    background: transparent;
+    border: 2px solid #333;
+    color: var(--muted);
+    width: 36px;
+    height: 36px;
+    cursor: crosshair;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s;
+    flex-shrink: 0;
+}
+
+.cart-delete-btn:hover {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: #fff;
+}
+
+.cart-total {
+    background: #000;
     border-top: 4px solid var(--accent);
     padding: 20px 24px;
-    margin-top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -803,23 +857,16 @@ nav {
 .cart-total-amount {
     font-family: 'Bebas Neue', 'Impact', sans-serif;
     font-size: 2.4rem;
-    font-weight: 400;
     letter-spacing: 3px;
     color: var(--accent);
-    /* Remove gradient */
-    background: none;
-    -webkit-background-clip: unset;
     -webkit-text-fill-color: var(--accent);
-    background-clip: unset;
 }
 
-/* ═══════════════════════════════════ MODAL ═══ */
-
+/* ─── MODAL ─────────────────────────────────────── */
 .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.88);
-    backdrop-filter: none;
     display: none;
     align-items: center;
     justify-content: center;
@@ -828,27 +875,31 @@ nav {
     animation: fadeIn 0.15s linear;
 }
 
-.modal-overlay.open { display: flex; }
+.modal-overlay.open {
+    display: flex;
+}
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-box {
     background: #0a0a0a;
     border: var(--border-thick);
-    border-radius: 0;
     padding: 40px;
     max-width: 480px;
     width: 100%;
     position: relative;
     animation: slideUp 0.2s ease;
-    overflow: hidden;
     box-shadow: 8px 8px 0 var(--accent);
 }
 
-/* Replace gradient bar with solid accent line */
 .modal-box::before {
     content: '';
     position: absolute;
@@ -860,43 +911,121 @@ nav {
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .modal-img {
     width: 100%;
     height: 220px;
     object-fit: contain;
-    border-radius: 0;
-    background: #000;
+    background: #fff;
     padding: 16px;
     margin-bottom: 24px;
     border: 2px solid #222;
-    filter: grayscale(10%);
 }
 
 .modal-name {
     font-family: 'Bebas Neue', 'Impact', sans-serif;
     font-size: 2rem;
-    font-weight: 400;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--text);
 }
 
 .modal-price {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--accent);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-family: 'Space Mono', monospace;
-    /* Remove gradient */
-    background: none;
-    -webkit-background-clip: unset;
     -webkit-text-fill-color: var(--accent);
-    background-clip: unset;
+}
+
+/* Modal meta details */
+.modal-meta {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border: 2px solid #222;
+}
+
+.modal-meta-item {
+    flex: 1;
+    padding: 10px 14px;
+    border-right: 2px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-meta-item:last-child {
+    border-right: none;
+}
+
+.modal-meta-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+}
+
+.modal-meta-value {
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    color: var(--text);
+    font-weight: 700;
+}
+
+.modal-badge {
+    display: inline-block;
+    background: var(--accent3);
+    color: #000 !important;
+    padding: 2px 8px;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.08em;
+}
+
+/* Modal action buttons */
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-actions .btn-primary {
+    box-shadow: 3px 3px 0 #333;
+}
+
+.btn-buy-modal {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent2);
+    border: 2px solid var(--accent2);
+    color: #fff;
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: crosshair;
+    transition: all 0.1s;
+    box-shadow: 3px 3px 0 #333;
+}
+
+.btn-buy-modal:hover {
+    background: #cc0033;
+    border-color: #cc0033;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--accent2);
 }
 
 .modal-close {
@@ -908,7 +1037,6 @@ nav {
     color: var(--muted);
     width: 36px;
     height: 36px;
-    border-radius: 0;
     cursor: crosshair;
     font-size: 0.9rem;
     display: flex;
@@ -924,15 +1052,13 @@ nav {
     color: #fff;
 }
 
-/* ═══════════════════════════════════ TOAST ═══ */
-
+/* ─── TOAST ─────────────────────────────────────── */
 .toast {
     position: fixed;
     bottom: 30px;
     right: 30px;
     background: #000;
     border: 2px solid var(--accent);
-    border-radius: 0;
     padding: 14px 22px;
     color: var(--text);
     font-size: 0.8rem;
@@ -947,7 +1073,6 @@ nav {
     display: flex;
     align-items: center;
     gap: 10px;
-    backdrop-filter: none;
     box-shadow: 4px 4px 0 var(--accent);
 }
 
@@ -956,20 +1081,33 @@ nav {
     opacity: 1;
 }
 
-.toast .toast-icon { font-size: 1rem; }
+.toast .toast-icon {
+    font-size: 1rem;
+}
 
-/* ═══════════════════════════════════ PAGE TRANSITIONS ═══ */
-
+/* ─── PAGES ─────────────────────────────────────── */
 .page {
     display: none;
     animation: fadeUp 0.25s ease forwards;
 }
 
-.page.active { display: block; }
+.page.active {
+    display: block;
+}
 
-/* ═══════════════════════════════════ SCROLLBAR ═══ */
+/* ─── SCROLLBAR ─────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+}
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}

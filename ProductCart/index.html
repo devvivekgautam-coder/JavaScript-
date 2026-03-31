@@ -5,12 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Hub</title>
-  
   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-
   <link rel="stylesheet" href="./assets/css/style.css">
-
-
 </head>
 
 <body>
@@ -26,7 +22,7 @@
       <div class="nav-logo">ProductHub<span></span></div>
       <div class="nav-actions">
         <button class="nav-btn" id="btnAdd" onclick="showPage('add')">+ Add</button>
-        <button class="nav-btn" id="btnView" onclick="showPage('view')">View</button>
+        <button class="nav-btn active" id="btnView" onclick="showPage('view')">View</button>
         <button class="nav-btn cart-btn" onclick="showPage('cart')">
           🛒 Cart <span id="cartCount">0</span>
         </button>
@@ -34,28 +30,25 @@
     </nav>
 
     <div class="container">
+
       <!-- ADD PAGE -->
-      <div id="addPage" class="page active">
+      <div id="addPage" class="page">
         <div class="page-header">
           <h1 class="page-title">Add <span class="highlight">Product</span></h1>
         </div>
-
         <div class="form-card">
           <div class="form-group">
             <label class="form-label">Product Name</label>
             <input class="form-input" type="text" id="name" placeholder="e.g. Wireless Headphones">
           </div>
-
           <div class="form-group">
             <label class="form-label">Price (₹)</label>
             <input class="form-input" type="number" id="price" placeholder="e.g. 1999">
           </div>
-
           <div class="form-group">
             <label class="form-label">Image URL</label>
             <input class="form-input" type="text" id="image" placeholder="https://..." oninput="preview()">
           </div>
-
           <div class="preview-box" id="previewBox">
             <div class="preview-placeholder" id="previewPlaceholder">
               <span class="icon">🖼️</span>
@@ -63,13 +56,12 @@
             </div>
             <img id="preview" alt="Preview">
           </div>
-
           <button class="btn-primary" onclick="addProduct()">Add Product →</button>
         </div>
       </div>
 
       <!-- VIEW PAGE -->
-      <div id="viewPage" class="page">
+      <div id="viewPage" class="page active">
         <div class="page-header">
           <h1 class="page-title">Explore <span class="highlight">Products</span></h1>
         </div>
@@ -80,8 +72,17 @@
             oninput="renderProducts()">
         </div>
 
-        <div class="stats-bar" id="statsBar"></div>
+        <!-- SORT BAR -->
+        <div class="sort-bar">
+          <span class="sort-label">Sort:</span>
+          <button class="sort-btn active" data-sort="default" onclick="setSort('default')">Default</button>
+          <button class="sort-btn" data-sort="az" onclick="setSort('az')">A → Z</button>
+          <button class="sort-btn" data-sort="za" onclick="setSort('za')">Z → A</button>
+          <button class="sort-btn" data-sort="lowhigh" onclick="setSort('lowhigh')">₹ Low → High</button>
+          <button class="sort-btn" data-sort="highlow" onclick="setSort('highlow')">₹ High → Low</button>
+        </div>
 
+        <div class="stats-bar" id="statsBar"></div>
         <div class="products-grid" id="products"></div>
       </div>
 
@@ -90,7 +91,6 @@
         <div class="page-header">
           <h1 class="page-title">Your <span class="highlight">Cart</span></h1>
         </div>
-
         <div id="cartItems" class="cart-list"></div>
       </div>
 
