@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        // function myAPI() {
+        //     return new Promise((resolve, reject) => {
+        //         let isRec = true;
+
+        //         setTimeout(() => {
+        //             if (isRec) {
+        //                 resolve("Yes");
+        //             } else {
+        //                 reject("No");
+        //             }
+        //         }, 1000);
+        //     });
+        // }
+
+        // myAPI().then(res => console.log(res)).catch(err => console.log(err));
+
+        function myAPI() {
+            return new Promise((resolve, reject) => {
+                let isRec = false;
+
+                setTimeout(() => {
+                    if (isRec) {
+                        resolve("Yes");
+                    } else {
+                        reject("No");
+                    }
+                }, 1000);
+            });
+        }
+
+        async function run() {
+            try {
+                let res = await myAPI();
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        run();
+    </script>
+</body>
+
+</html>

@@ -43,7 +43,8 @@ body {
   color: var(--text);
   overflow-x: hidden;
   min-height: 100vh;
-  padding-bottom: calc(var(--player-h) + 20px);
+  /* ✅ FIX: player height + safe area (iOS/Android home bar) + breathing room */
+  padding-bottom: calc(var(--player-h) + env(safe-area-inset-bottom, 0px) + 24px);
 }
 
 /* ── STAR CANVAS ─────────────────────────────── */
@@ -814,7 +815,6 @@ body {
 .song-card-img img {
   width: 100%;
   aspect-ratio: 1/1;
-  /* object-fit: cover; */
   display: block;
   border-radius: 10px;
   transition: filter 0.3s, transform 0.3s;
@@ -893,20 +893,26 @@ body {
   }
 }
 
-/* ── PLAYER BAR ──────────────────────────────── */
+/* ══════════════════════════════════════════════
+   PLAYER BAR — FULLY FIXED
+   ══════════════════════════════════════════════ */
 .player-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: var(--player-h);
-  background: rgba(8, 8, 20, 0.92);
+  /* ✅ Height + safe area for iOS/Android home indicator */
+  height: calc(var(--player-h) + env(safe-area-inset-bottom, 0px));
+  background: rgba(8, 8, 20, 0.96);
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border-top: 1px solid var(--border);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  /* align to top of bar, padding handles centering */
   justify-content: space-between;
-  padding: 0 28px;
+  /* ✅ Top padding centers content, bottom padding = safe area */
+  padding: 0 28px env(safe-area-inset-bottom, 0px);
   gap: 20px;
   z-index: 999;
   transform: translateY(100%);
@@ -915,6 +921,14 @@ body {
   pointer-events: none;
 }
 
+/* Inner wrapper to always be exactly --player-h tall and vertically centered */
+.player-bar>* {
+  margin-top: 0;
+  /* Each child uses align-self center to stay in the 90px zone */
+  align-self: center;
+}
+
+/* ✅ When visible, the extra safe-area height is transparent padding below controls */
 .player-bar.visible {
   transform: translateY(0);
   opacity: 1;
@@ -928,6 +942,7 @@ body {
   gap: 14px;
   min-width: 190px;
   max-width: 240px;
+  flex-shrink: 0;
 }
 
 .pb-cover {
@@ -973,20 +988,23 @@ body {
   max-width: 155px;
 }
 
-/* Controls */
+/* Controls — CENTER */
 .pb-center {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   max-width: 520px;
+  /* ✅ Fixed height so controls don't shift with safe-area */
+  height: var(--player-h);
 }
 
 .pb-controls {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
 .pb-icon-btn {
@@ -995,8 +1013,14 @@ body {
   color: var(--muted);
   font-size: 16px;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   transition: color 0.2s, transform 0.2s;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .pb-icon-btn:hover {
@@ -1009,27 +1033,28 @@ body {
 }
 
 .pb-play-btn {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  background: linear-gradient(135deg, var(--purple), var(--neon)) !important;
-  border: none !important;
-  color: white !important;
-  font-size: 17px !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.35) !important;
-  transition: transform 0.2s, box-shadow 0.2s !important;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--neon));
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
 }
 
 .pb-play-btn:hover {
-  transform: scale(1.1) !important;
-  box-shadow: 0 0 34px rgba(0, 212, 255, 0.55) !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 34px rgba(0, 212, 255, 0.55);
 }
 
-/* Progress */
+/* Progress bar row */
 .pb-progress-row {
   display: flex;
   align-items: center;
@@ -1043,19 +1068,23 @@ body {
   min-width: 34px;
   text-align: center;
   font-family: var(--font-body);
+  flex-shrink: 0;
 }
 
 .progress-wrap {
   flex: 1;
   position: relative;
   height: 4px;
+  display: flex;
+  align-items: center;
 }
 
 #progress {
   width: 100%;
   height: 4px;
   appearance: none;
-  background: rgba(255, 255, 255, 0.1);
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   cursor: pointer;
   position: relative;
@@ -1064,6 +1093,7 @@ body {
 
 #progress::-webkit-slider-thumb {
   appearance: none;
+  -webkit-appearance: none;
   width: 14px;
   height: 14px;
   background: white;
@@ -1072,41 +1102,70 @@ body {
   box-shadow: 0 0 6px var(--neon);
 }
 
-/* Volume */
+#progress::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px var(--neon);
+}
+
+/* Volume — RIGHT */
 .pb-right {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  height: var(--player-h);
 }
 
 .pb-volume {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 140px;
+  min-width: 130px;
   justify-content: flex-end;
 }
 
 .pb-volume i {
   color: var(--muted);
   font-size: 15px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.pb-volume i:hover {
+  color: white;
 }
 
 #volume {
-  width: 90px;
+  width: 88px;
   height: 4px;
   appearance: none;
-  background: rgba(255, 255, 255, 0.1);
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   cursor: pointer;
 }
 
 #volume::-webkit-slider-thumb {
   appearance: none;
+  -webkit-appearance: none;
   width: 12px;
   height: 12px;
   background: var(--purple);
   border-radius: 50%;
   cursor: pointer;
+}
+
+#volume::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--purple);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
 
 /* ── PLAYLIST MODAL ──────────────────────────── */
@@ -1238,7 +1297,8 @@ body {
 /* ── TOAST ───────────────────────────────────── */
 .mg-toast {
   position: fixed;
-  bottom: calc(var(--player-h) + 20px);
+  /* ✅ Toast sits above player bar + safe area */
+  bottom: calc(var(--player-h) + env(safe-area-inset-bottom, 0px) + 16px);
   left: 50%;
   transform: translateX(-50%) translateY(16px);
   background: linear-gradient(135deg, var(--purple), var(--neon));
@@ -1302,7 +1362,9 @@ body {
   }
 }
 
-/* ── RESPONSIVE ──────────────────────────────── */
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .hero-visual {
     width: 280px;
@@ -1355,6 +1417,23 @@ body {
   }
 }
 
+/* ── TABLET PLAYER (600-900px) ─────────────── */
+@media (max-width: 900px) and (min-width: 577px) {
+  .pb-song-info {
+    min-width: 150px;
+    max-width: 190px;
+  }
+
+  .pb-volume {
+    min-width: 110px;
+  }
+
+  #volume {
+    width: 70px;
+  }
+}
+
+/* ── MOBILE PLAYER (≤576px) ─────────────────── */
 @media (max-width: 576px) {
   .nav-inner {
     padding: 0 16px;
@@ -1376,8 +1455,9 @@ body {
     padding: 20px 14px;
   }
 
-  .pb-volume,
-  .pb-right {
+  /* ✅ Mobile player: hide volume & shuffle/repeat to save space */
+  .pb-right,
+  .pb-volume {
     display: none;
   }
 
@@ -1386,14 +1466,53 @@ body {
     display: none;
   }
 
+  /* ✅ Tighten song info on mobile */
   .pb-song-info {
-    max-width: 130px;
-    min-width: 100px;
+    max-width: 120px;
+    min-width: 90px;
+    gap: 10px;
+  }
+
+  .pb-cover {
+    width: 44px;
+    height: 44px;
+  }
+
+  .pb-meta h6 {
+    font-size: 13px;
+    max-width: 100px;
+  }
+
+  .pb-meta p {
+    font-size: 11px;
+    max-width: 100px;
+  }
+
+  /* ✅ Center controls take remaining space */
+  .pb-center {
+    gap: 4px;
+  }
+
+  .pb-controls {
+    gap: 10px;
+  }
+
+  .pb-play-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .pb-icon-btn {
+    font-size: 14px;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
   }
 
   .player-bar {
-    padding: 0 14px;
-    gap: 10px;
+    padding: 0 12px env(safe-area-inset-bottom, 0px);
+    gap: 8px;
   }
 
   .songs-grid {

@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ✅ viewport-fit=cover is REQUIRED for env(safe-area-inset-bottom) to work on iOS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Music Galaxy — Your Music Universe</title>
   <link rel="icon" href="./assets/images/misic-galaxy-icon.png">
   <link rel="stylesheet" href="./assets/fonts/orbitron-font/stylesheet.css">
@@ -30,8 +31,7 @@
       <ul class="nav-links">
         <li><a href="#" class="nav-link-item active"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
         <li><a href="#" class="nav-link-item"><i class="fa-solid fa-download"></i><span>Install</span></a></li>
-        <li><a href="#" class="nav-link-item"><i class="fa-solid fa-right-to-bracket"></i><span>Sign
-              In</span></a></li>
+        <li><a href="#" class="nav-link-item"><i class="fa-solid fa-right-to-bracket"></i><span>Sign In</span></a></li>
         <li><a href="#" class="nav-signup-btn"><i class="fa-solid fa-user-plus"></i> Sign Up</a></li>
       </ul>
 
@@ -142,7 +142,6 @@
         <span id="currentTime">0:00</span>
         <div class="progress-wrap">
           <input type="range" id="progress" value="0">
-          <div class="progress-fill" id="progressFill"></div>
         </div>
         <span id="duration">0:00</span>
       </div>
@@ -165,8 +164,7 @@
         onkeydown="if(event.key==='Enter') confirmCreatePlaylist()">
       <div class="pl-modal-actions">
         <button class="pl-cancel" onclick="closeCreatePlaylist()">Cancel</button>
-        <button class="pl-confirm" onclick="confirmCreatePlaylist()"><i class="fa-solid fa-plus"></i>
-          Banao</button>
+        <button class="pl-confirm" onclick="confirmCreatePlaylist()"><i class="fa-solid fa-plus"></i> Banao</button>
       </div>
     </div>
   </div>
