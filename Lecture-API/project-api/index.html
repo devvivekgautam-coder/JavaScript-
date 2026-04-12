@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creating API</title>
+    <title>Dog Breeds Gallery</title>
 
+    <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+
+    <!-- Style CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
+
     <section>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-2 vh-100 bg-primary fs-4 overflow-scroll">
-                    <div class=" p-2 fw-medium text-center text-capitalize">
-                        <ul class="breedList p-0">
-
-                        </ul>
-                    </div>
+                <div class="col-3 vh-100 bg-primary text-white overflow-auto p-3">
+                    <h4 class="text-center mb-3">Dog Breeds</h4>
+                    <div class="breedList"></div>
                 </div>
-                <div class="col-10  vh-100 bg-secondary">
 
+                <div class="col-9 vh-100 bg-light overflow-auto p-3">
+                    <div class="rightSight">
+                        <h2 class="text-center justify-content-center align-items-center">
+                            Click On Any Bread To View.
+                        </h2>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <script src="./assets/js/script.js"></script>
+
+    <!-- Bootstrap CSS -->
     <script src="./assets/js/bootstrap.min.js"></script>
+
+    <!-- Script JS -->
+    <script src="./assets/js/script.js"></script>
+
 </body>
+
 </html>

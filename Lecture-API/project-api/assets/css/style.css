@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif, sans-serif;
+}
+
+.breedList p {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 25px;
+    background-color: #0dcaf0;
+    margin-bottom: 8px;
+    transition: all 0.3s linear;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.breedList p:hover {
+    cursor: pointer;
+}
+
+.breedList p.active {
+    background-color: #f34f4f;
+    color: #fff;
+}
+
+.rightSight {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rightSight h2,
+.rightSight h3 {
+    width: 100%;
+    text-transform: capitalize;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: all 0.3s linear;
+}
+
+img:hover {
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    transform: translateY(-5px);
+}
